@@ -28,3 +28,21 @@ class BST:
             else:
                 break
 
+class AVL:
+    def __init__(self):
+        self.root = None
+
+    def build_from_sorted(self, elements):
+        self.root = self._build_recursive(elements)
+
+    def _build_recursive(self, elements):
+        if not elements:
+            return None
+        
+        mid = len(elements) // 2
+        root = Node(elements[mid])
+        
+        root.left = self._build_recursive(elements[:mid])
+        root.right = self._build_recursive(elements[mid+1:])
+        
+        return root
