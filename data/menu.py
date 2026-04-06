@@ -1,5 +1,6 @@
 #tutaj sie znajduje menu naszego programu
 import sys
+from tree import BST, AVL
 #funkcja wyswitlajaca pomoc
 def show_help():
     print("Help         Show this message")
@@ -11,7 +12,35 @@ def show_help():
     print("Exit         Exit the program(same as Ctrl+D)")
 #glowna fukcja
 def main():
+    tree_type = "BST"
+    if "--tree" in sys.argv:
+        idx = sys.argv.index("--tree")
+        if idx + 1 < len(sys.argv):
+            tree_type = sys.argv[idx + 1]
+
+    # Tworzymy odpowiedni obiekt
+    tree = AVL() if tree_type == "AVL" else BST()
+
     try:
+        
+        try:
+            nodes_count = input("nodes> ").strip()
+            if not nodes_count: return
+            
+            vals_raw = input("insert> ").strip()
+            elements = [int(x) for x in vals_raw.split()]
+            
+            if tree_type == "AVL":
+                tree.build_from_sorted(elements)
+                print(f"Sorted: {sorted(elements)}")
+                print(f"Median: {sorted(elements)[len(sorted(elements)) // 2]}")
+            else:
+                print(f"Inserting: {', '.join(map(str, elements))}")
+                for val in elements:
+                    tree.insert(val)
+        except EOFError:
+            return
+    
         while True:
         
             try:
