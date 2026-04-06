@@ -1,4 +1,5 @@
 #tutaj będa funkcje dla komendy print
+from tree import BST, AVL
 class Node:
     def __init__(self, key):
         self.key = key
@@ -6,23 +7,23 @@ class Node:
         self.right = None
 
 
-def get_preorder(self, node, result):
+def get_preorder( node, result):
     if node:
         result.append(str(node.key))       # Korzeń
-        self.get_preorder(node.left, result)  # Lewo
-        self.get_preorder(node.right, result) # Prawo
+        get_preorder(node.left, result)  # Lewo
+        get_preorder(node.right, result) # Prawo
     return result
 
-def get_inorder(self, node, result):
+def get_inorder( node, result):
     if node:
-        self.get_inorder(node.left, result)   # Lewo
+        get_inorder(node.left, result)   # Lewo
         result.append(str(node.key))        # Korzeń
-        self.get_inorder(node.right, result)  # Prawo
+        get_inorder(node.right, result)  # Prawo
     return result
 
-def get_postorder(self, node, result):
+def get_postorder(node, result):
     if node:
-        self.get_postorder(node.left, result)  # Lewo
-        self.get_postorder(node.right, result) # Prawo
+        get_postorder(node.left, result)  # Lewo
+        get_postorder(node.right, result) # Prawo
         result.append(str(node.key))         # Korzeń
     return result
