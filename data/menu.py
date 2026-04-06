@@ -1,7 +1,9 @@
 #tutaj sie znajduje menu naszego programu
 import sys
+import time
 from tree import BST, AVL
 from print_functions import  get_preorder, get_inorder, get_postorder
+from delete_function import clean_tree_recursive
 #funkcja wyswitlajaca pomoc
 def show_help():
     print("Help         Show this message")
@@ -55,18 +57,32 @@ def main():
             if command == "Help":
                 show_help()
             elif command == "Print":
-                
-                print("----Wypisywanie drzewa w trzech postaciach----")
-                #tu jeszcze nie zrobilismy(wyswietla pre, in, post -order)
-                print(f"Pre - order:  {' '.join(get_preorder(tree.root, []))}")
-                print(f"In - order:   {' '.join(get_inorder(tree.root, []))}")
-                print(f"Post - order: {' '.join(get_postorder(tree.root, []))}")
+                if tree.root is None:
+                    print("Tree is empty")
+                else:
+                    print("----Wypisywanie drzewa w trzech postaciach----")
+                    #tu jeszcze nie zrobilismy(wyswietla pre, in, post -order)
+                    print(f"Pre - order:  {' '.join(get_preorder(tree.root, []))}")
+                    print(f"In - order:   {' '.join(get_inorder(tree.root, []))}")
+                    print(f"Post - order: {' '.join(get_postorder(tree.root, []))}")
             elif command == "Remove":
                 print("----Usuwanie elementu/ow drzewa----")
                 #func to delete tree
             elif command == "Delete":
                 print("----Usuwanie calkowite drzewa----")
                 #func to delete whole tree
+                if tree.root is None:
+                    print("Tree is empty")
+                #Piękne usuwanie całego drzewa
+                else:
+                    print("Deleting the tree: ", end="", flush=True)
+                    for i in range(1, 4):
+                        print(f"{i}... ", end="", flush=True)
+                        time.sleep(1)  
+                    print("\nTree was deleted successfully!")
+                    clean_tree_recursive(tree.root)
+                    tree.root = None
+    
             elif command == "Export":
                 print("----Eksport drzewa do tikzpicture----")
                 #func to export tree to tikzpicture
