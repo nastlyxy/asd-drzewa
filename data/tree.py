@@ -41,7 +41,37 @@ class BST:
         current = self.root
         while current.right is not None:
             current = current.right
-        return current.key        
+        return current.key 
+
+    def remove(self, key):
+        self.root = self._remove_recursive(self.root, key)
+
+    def _remove_recursive(self, node, key):
+        if node is None:
+            return node
+
+        if key < node.key:
+            node.left = self._remove_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._remove_recursive(node.right, key)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            temp = self._get_min_node(node.right)
+         
+            node.key = temp.key
+ 
+            node.right = self._remove_recursive(node.right, temp.key)
+      
+        return node
+
+    def _get_min_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current       
 
 class AVL:
     def __init__(self):
@@ -77,3 +107,33 @@ class AVL:
         while current.right is not None:
             current = current.right
         return current.key
+    
+    def remove(self, key):
+        self.root = self._remove_recursive(self.root, key)
+
+    def _remove_recursive(self, node, key):
+        if node is None:
+            return node
+
+        if key < node.key:
+            node.left = self._remove_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._remove_recursive(node.right, key)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            temp = self._get_min_node(node.right)
+         
+            node.key = temp.key
+ 
+            node.right = self._remove_recursive(node.right, temp.key)
+      
+        return node
+
+    def _get_min_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
