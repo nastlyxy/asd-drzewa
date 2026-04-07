@@ -7,6 +7,7 @@ from delete_function import clean_tree_recursive
 #funkcja wyswitlajaca pomoc
 def show_help():
     print("Help         Show this message")
+    print("MinMax       Find minimum and maximum element")
     print("Print        Print the tree usin In-order, Pre-order, Post-order")
     print("Remove       Remove elements of the tree")
     print("Delete       Delete the whole tree")
@@ -65,6 +66,13 @@ def main():
                     print(f"Pre - order:  {' '.join(get_preorder(tree.root, []))}")
                     print(f"In - order:   {' '.join(get_inorder(tree.root, []))}")
                     print(f"Post - order: {' '.join(get_postorder(tree.root, []))}")
+            elif command == "MinMax":
+                if tree.root is None:
+                    print("Tree is empty")
+                else:
+                    print("----Wyszukiwanie min/max----")
+                    print(f"Min: {tree.find_min()}")
+                    print(f"Max: {tree.find_max()}")        
             elif command == "Remove":
                 print("----Usuwanie elementu/ow drzewa----")
                 #func to delete tree
