@@ -27,6 +27,21 @@ class BST:
                 current = current.right
             else:
                 break
+    def find_min(self):
+        if self.root is None:
+            return None
+        current = self.root
+        while current.left is not None:
+            current = current.left
+        return current.key
+
+    def find_max(self):
+        if self.root is None:
+            return None
+        current = self.root
+        while current.right is not None:
+            current = current.right
+        return current.key        
 
 class AVL:
     def __init__(self):
@@ -46,3 +61,19 @@ class AVL:
         root.right = self._build_recursive(elements[mid+1:])
         
         return root
+    
+    def find_min(self):
+        if self.root is None:
+            return None
+        current = self.root
+        while current.left is not None:
+            current = current.left
+        return current.key
+
+    def find_max(self):
+        if self.root is None:
+            return None
+        current = self.root
+        while current.right is not None:
+            current = current.right
+        return current.key
