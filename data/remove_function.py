@@ -9,13 +9,18 @@ def handle_remove(tree):
             return
         nodes_count = int(nodes_str)
     
-        val_str = input("delete> ").strip()
-        if not val_str:
-            return
-        
-        elements = [int(x) for x in val_str.split()]
-        
-        elements = elements[:nodes_count]
+        while True:
+            val_str = input("delete> ").strip()
+            if not val_str:
+                return
+                
+            elements = [int(x) for x in val_str.split()]
+            
+            if len(elements) != nodes_count:
+                print(f"Uwaga: Wprowadzono {len(elements)} liczb. Oczekiwano {nodes_count}. Sprobuj ponownie.")
+                continue
+            else:
+                break
         
         for val in elements:
             if tree.search(val):
