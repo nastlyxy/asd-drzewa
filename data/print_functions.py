@@ -27,3 +27,17 @@ def get_postorder(node, result):
         get_postorder(node.right, result) # Prawo
         result.append(str(node.key))         # Korzeń
     return result
+
+
+
+def export_tikz(node):
+    if node is None:
+        return ""
+        
+    if node.left is None and node.right is None:
+        return f"node {{{node.key}}}"
+        
+    l_str = f"child {{ {export_tikz(node.left)} }}" if node.left else "child[missing] {}"
+    r_str = f"child {{ {export_tikz(node.right)} }}" if node.right else "child[missing] {}"
+    
+    return f"node {{{node.key}}}\n{l_str}\n{r_str}"
