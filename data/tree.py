@@ -71,7 +71,19 @@ class BST:
         current = node
         while current.left is not None:
             current = current.left
-        return current       
+        return current   
+
+    def search(self, key):
+        current = self.root
+        
+        while current is not None:
+            if key == current.key:
+                return True
+            elif key < current.key:
+                current = current.left
+            else:
+                current = current.right
+        return False    
 
 class AVL:
     def __init__(self):
@@ -137,3 +149,15 @@ class AVL:
         while current.left is not None:
             current = current.left
         return current
+    
+    def search(self, key):
+        current = self.root
+        
+        while current is not None:
+            if key == current.key:
+                return True
+            elif key < current.key:
+                current = current.left
+            else:
+                current = current.right
+        return False 
