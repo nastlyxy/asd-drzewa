@@ -4,6 +4,7 @@ import time
 from tree import BST, AVL
 from print_functions import  get_preorder, get_inorder, get_postorder
 from delete_function import clean_tree_recursive
+from remove_function import handle_remove
 #funkcja wyswitlajaca pomoc
 def show_help():
     print("Help         Show this message")
@@ -76,6 +77,7 @@ def main():
             elif command == "Remove":
                 print("----Usuwanie elementu/ow drzewa----")
                 #func to delete tree
+                handle_remove(tree)
             elif command == "Delete":
                 print("----Usuwanie calkowite drzewa----")
                 #func to delete whole tree

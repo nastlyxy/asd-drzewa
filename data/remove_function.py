@@ -3,17 +3,18 @@ def handle_remove(tree):
         print("Tree is empty")
         return
     try:
-        val_str = input("value to remove> ").strip()
+        val_str = input("value/s to remove> ").strip()
         
         if not val_str:
             return
         
-        val = int(val_str)
-        
-        tree.remove(val)
-        print(f"Value {val} was removed from the tree.")
+        elements = [int(x) for x in val_str.split()]
+       
+        for val in elements:
+            tree.remove(val)
+            print(f"Value {val} was removed from the tree.")
         
     except ValueError:
-        print("Invalid input. Please enter a number.")
+        print("Invalid input. Please enter numbers separated by spaces.")
     except EOFError:
         pass
