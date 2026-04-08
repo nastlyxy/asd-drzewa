@@ -1,3 +1,5 @@
+import math
+
 class Node:
     def __init__(self, key):
         self.key = key
@@ -83,7 +85,55 @@ class BST:
                 current = current.left
             else:
                 current = current.right
-        return False    
+        return False 
+
+    def rebalance(self):
+        if self.root is None:
+            return
+
+        pseudo_root = Node(0)
+        pseudo_root.right = self.root
+
+        node_count = self._tree_to_vine(pseudo_root)
+        self._vine_to_tree(pseudo_root, node_count)
+
+        self.root = pseudo_root.right
+
+    def _tree_to_vine(self, pseudo_root):
+        count = 0
+        tail = pseudo_root
+        rest = tail.right
+
+        while rest is not None:
+            if rest.left is None:
+                count += 1
+                tail = rest
+                rest = rest.right
+            else:
+                temp = rest.left
+                rest.left = temp.right
+                temp.right = rest
+                rest = temp
+                tail.right = temp
+        return count
+
+    def _vine_to_tree(self, pseudo_root, count):
+        leaves = count + 1 - 2**int(math.log2(count + 1))
+        self._compress(pseudo_root, leaves)
+        
+        count = count - leaves
+        while count > 1:
+            count //= 2
+            self._compress(pseudo_root, count)
+
+    def _compress(self, pseudo_root, count):
+        scanner = pseudo_root
+        for _ in range(count):
+            child = scanner.right
+            scanner.right = child.right
+            scanner = scanner.right
+            child.right = scanner.left
+            scanner.left = child   
 
 class AVL:
     def __init__(self):

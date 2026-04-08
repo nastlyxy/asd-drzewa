@@ -98,7 +98,13 @@ def main():
                 #func to export tree to tikzpicture
             elif command == "Rebalance":
                 print("----Przestawianie drzewa----")
-                #func to rebalance tree
+                if tree_type == "BST":
+                    tree.rebalance()
+                    pre_order_result = get_preorder(tree.root, [])
+                    
+                    print(f"Pre-Order: {', '.join(pre_order_result)}")
+                else:
+                    print("AVL tree is automatically balanced. No action needed.")
             elif command == "Exit":
                 break
             else:
