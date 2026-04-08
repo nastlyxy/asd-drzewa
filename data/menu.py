@@ -29,11 +29,19 @@ def main():
     try:
         
         try:
-            nodes_count = input("nodes> ").strip()
-            if not nodes_count: return
+            nodes_count_str = input("nodes> ").strip()
+            if not nodes_count_str: return
+            nodes_count = int(nodes_count_str)
             
-            vals_raw = input("insert> ").strip()
-            elements = [int(x) for x in vals_raw.split()]
+            while True:
+                vals_raw = input("insert> ").strip()
+                elements = [int(x) for x in vals_raw.split()]
+                
+                if len(elements) != nodes_count:
+                    print(f"Uwaga: Wprowadzono {len(elements)} liczb. Oczekiwano {nodes_count}. Sprobuj ponownie.")
+                    continue
+                else:
+                    break
             
             if tree_type == "AVL":
                 sorted_elements = sorted(elements)
@@ -64,9 +72,9 @@ def main():
                 else:
                     print("----Wypisywanie drzewa w trzech postaciach----")
                     #tu jeszcze nie zrobilismy(wyswietla pre, in, post -order)
-                    print(f"Pre - order:  {' '.join(get_preorder(tree.root, []))}")
-                    print(f"In - order:   {' '.join(get_inorder(tree.root, []))}")
-                    print(f"Post - order: {' '.join(get_postorder(tree.root, []))}")
+                    print(f"Pre-order:  {', '.join(get_preorder(tree.root, []))}")
+                    print(f"In-order:   {', '.join(get_inorder(tree.root, []))}")
+                    print(f"Post-order: {', '.join(get_postorder(tree.root, []))}")
             elif command == "MinMax":
                 if tree.root is None:
                     print("Tree is empty")
@@ -83,14 +91,12 @@ def main():
                 #func to delete whole tree
                 if tree.root is None:
                     print("Tree is empty")
-                #Piękne usuwanie całego drzewa
                 else:
-                    print("Deleting the tree: ", end="", flush=True)
-                    for i in range(1, 4):
-                        print(f"{i}... ", end="", flush=True)
-                        time.sleep(1)  
-                    print("\nTree was deleted successfully!")
-                    clean_tree_recursive(tree.root)
+                    deleted_nodes = []
+                    clean_tree_recursive(tree.root, deleted_nodes)
+
+                    print(f"Deleting: {' '.join(deleted_nodes)}")
+                    print("Tree successfully removed")
                     tree.root = None
     
             elif command == "Export":
