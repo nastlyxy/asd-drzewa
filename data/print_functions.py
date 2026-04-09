@@ -6,7 +6,7 @@ class Node:
         self.left = None
         self.right = None
 
-
+#TREE TRAVERSAL ALGORITHMS
 def get_preorder( node, result):
     if node:
         result.append(str(node.key))       # Korzeń
@@ -29,7 +29,7 @@ def get_postorder(node, result):
     return result
 
 
-
+#EXPORT FEATURE
 def export_tikz(node):
     if node is None:
         return ""

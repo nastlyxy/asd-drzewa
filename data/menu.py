@@ -5,7 +5,8 @@ from tree import BST, AVL
 from print_functions import  get_preorder, get_inorder, get_postorder, export_tikz
 from delete_function import clean_tree_recursive
 from remove_function import handle_remove
-#funkcja wyswitlajaca pomoc
+
+#Displays the list of available commands to the user.
 def show_help():
     print("Help         Show this message")
     print("MinMax       Find minimum and maximum element")
@@ -15,24 +16,32 @@ def show_help():
     print("Export       Export tree to tikzpicture")
     print("Rebalance    Rebalance tree")
     print("Exit         Exit the program(same as Ctrl+D)")
-#glowna fukcja
+
+
+    """
+    Main application loop. Handles terminal arguments, tree initialization,
+    and routes user commands to the corresponding logic.
+    """
 def main():
+
+    # Default tree is BST unless overridden via terminal arguments
     tree_type = "BST"
     if "--tree" in sys.argv:
         idx = sys.argv.index("--tree")
         if idx + 1 < len(sys.argv):
             tree_type = sys.argv[idx + 1]
-
-    # Tworzymy odpowiedni obiekt
     tree = AVL() if tree_type == "AVL" else BST()
 
     try:
+
+        #INITIALIZATION BLOCK
         
         try:
             nodes_count_str = input("nodes> ").strip()
             if not nodes_count_str: return
             nodes_count = int(nodes_count_str)
-            
+
+            # Strict loop: forces user to input the exact amount of numbers promised
             while True:
                 vals_raw = input("insert> ").strip()
                 elements = [int(x) for x in vals_raw.split()]
@@ -49,21 +58,25 @@ def main():
                 if sorted_elements:
                     median_idx = len(sorted_elements) // 2
                     print(f"Median: {sorted_elements[median_idx]}")
-                #ta ponizsza funkcja z AVL.py buduje drzewo AVL z posortowanej listy elementow, co zapewnia jego zbalansowanie
+                
                 tree.build_from_sorted(sorted_elements)
             else:
                 print(f"Inserting: {', '.join(map(str, elements))}")
                 for val in elements:
                     tree.insert(val)
         except EOFError:
+            # Handles EOF during initialization (e.g., empty file redirection)
             return
-    
+        
+        #MAIN ACTION LOOP
         while True:
         
             try:
                 command =input("action> ").strip()
             except EOFError:
                 break
+
+            # Command Routing
             if command == "Help":
                 show_help()
             elif command == "Print":
@@ -104,6 +117,7 @@ def main():
                 if tree.root is None:
                     print("Tree is empty")
                 else:
+                    # Wraps the recursive TikZ nodes in the LaTeX boilerplate
                     tikz_nodes = f"\\{export_tikz(tree.root)};"
                     full_tikz = f"""\\begin{{tikzpicture}}[
         level distance=1.5cm,
@@ -116,7 +130,8 @@ def main():
 \\end{{tikzpicture}}"""
                    
                     print(full_tikz)
-                    
+
+                    # Automatically write the LaTeX code to a file
                     with open("drzewo_export.tex", "w", encoding="utf-8") as f:
                         f.write(full_tikz)
                         
@@ -134,8 +149,10 @@ def main():
                 break
             else:
                 print(f"Unknown command: {command}")
+    # Gracefully handle Ctrl+C or Ctrl+D user interruptions            
     except (KeyboardInterrupt, EOFError):
             pass
+    # Catch conversion errors (e.g., trying to parse letters into ints)
     except ValueError:
             sys.exit(1)
     print("Programm exited with status 0")

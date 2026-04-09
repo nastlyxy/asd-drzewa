@@ -1,3 +1,4 @@
+#Handles the interactive process of removing multiple elements from the tree. Includes strict validation to ensure the user provides the exact number of elements.
 def handle_remove(tree):
     if tree.root is None:
         print("Tree is empty")

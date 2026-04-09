@@ -1,3 +1,5 @@
+#Recursively deletes the tree using Post-Order traversal
+
 def clean_tree_recursive(node, deleted_nodes):
     if node is None:
         return

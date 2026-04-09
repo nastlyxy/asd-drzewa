@@ -1,5 +1,6 @@
 import math
 
+#Represents a single node in a Binary Tree.
 class Node:
     def __init__(self, key):
         self.key = key
@@ -7,9 +8,11 @@ class Node:
         self.right = None
 
 class BST:
+    #Binary Search Tree (BST) implementation.
     def __init__(self):
         self.root = None
 
+    #Iterative insertion of a new key into the BST.
     def insert(self, key):
         if self.root is None:
             self.root = Node(key)
@@ -29,6 +32,7 @@ class BST:
                 current = current.right
             else:
                 break
+    #Finds the smallest value (leftmost node).        
     def find_min(self):
         if self.root is None:
             return None
@@ -36,7 +40,8 @@ class BST:
         while current.left is not None:
             current = current.left
         return current.key
-
+    
+    #Finds the largest value (rightmost node).
     def find_max(self):
         if self.root is None:
             return None
@@ -44,10 +49,18 @@ class BST:
         while current.right is not None:
             current = current.right
         return current.key 
-
+    
+    #Public method to trigger recursive removal.
     def remove(self, key):
         self.root = self._remove_recursive(self.root, key)
 
+
+        """
+        Recursively finds and removes a node, handling 3 cases:
+        1. Leaf node
+        2. Node with one child
+        3. Node with two children (requires swapping with in-order successor)
+        """
     def _remove_recursive(self, node, key):
         if node is None:
             return node
@@ -68,13 +81,15 @@ class BST:
             node.right = self._remove_recursive(node.right, temp.key)
       
         return node
-
+    
+    #Helper for remove: gets the node with the minimum value.
     def _get_min_node(self, node):
         current = node
         while current.left is not None:
             current = current.left
-        return current   
-
+        return current  
+     
+    #Iteratively checks if a key exists in the tree.
     def search(self, key):
         current = self.root
         
@@ -86,7 +101,8 @@ class BST:
             else:
                 current = current.right
         return False 
-
+     
+    #DSW (Day-Stout-Warren) BALANCING ALGORITHM 
     def rebalance(self):
         if self.root is None:
             return
@@ -98,7 +114,8 @@ class BST:
         self._vine_to_tree(pseudo_root, node_count)
 
         self.root = pseudo_root.right
-
+        
+    #Uses right rotations to flatten the tree into a straight 'vine'.
     def _tree_to_vine(self, pseudo_root):
         count = 0
         tail = pseudo_root
@@ -116,7 +133,8 @@ class BST:
                 rest = temp
                 tail.right = temp
         return count
-
+    
+    #Uses mathematical left rotations to fold the vine into a balanced tree.
     def _vine_to_tree(self, pseudo_root, count):
         leaves = count + 1 - 2**int(math.log2(count + 1))
         self._compress(pseudo_root, leaves)
@@ -126,6 +144,7 @@ class BST:
             count //= 2
             self._compress(pseudo_root, count)
 
+    #Performs a specified number of left rotations along the right spine.
     def _compress(self, pseudo_root, count):
         scanner = pseudo_root
         for _ in range(count):
@@ -135,13 +154,16 @@ class BST:
             child.right = scanner.left
             scanner.left = child   
 
+#AVL Tree
 class AVL:
     def __init__(self):
         self.root = None
 
+    #Public method to start the bisection build.
     def build_from_sorted(self, elements):
         self.root = self._build_recursive(elements)
-
+    
+    #Builds a perfectly balanced tree by continuously selecting the median of a sorted array as the local root.
     def _build_recursive(self, elements):
         if not elements:
             return None
@@ -154,6 +176,7 @@ class AVL:
         
         return root
     
+    #Standard BST functions mapped to AVL
     def find_min(self):
         if self.root is None:
             return None
