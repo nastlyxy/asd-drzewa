@@ -8,14 +8,14 @@ from remove_function import handle_remove
 
 #Displays the list of available commands to the user.
 def show_help():
-    print("Help         Show this message")
-    print("MinMax       Find minimum and maximum element")
-    print("Print        Print the tree usin In-order, Pre-order, Post-order")
-    print("Remove       Remove elements of the tree")
-    print("Delete       Delete the whole tree")
-    print("Export       Export tree to tikzpicture")
-    print("Rebalance    Rebalance tree")
-    print("Exit         Exit the program(same as Ctrl+D)")
+    print("Help            Show this message")
+    print("MinMax          Find minimum and maximum element")
+    print("Print           Print the tree usin In-order, Pre-order, Post-order")
+    print("Remove          Remove elements of the tree")
+    print("DeleteAll       Delete the whole tree")
+    print("Export          Export tree to tikzpicture")
+    print("Rebalance       Rebalance tree")
+    print("Exit            Exit the program(same as Ctrl+D)")
 
 
     """
@@ -99,7 +99,7 @@ def main():
                 print("----Usuwanie elementu/ow drzewa----")
                 #func to delete tree
                 handle_remove(tree)
-            elif command == "Delete":
+            elif command == "DeleteAll":
                 print("----Usuwanie calkowite drzewa----")
                 #func to delete whole tree
                 if tree.root is None:
