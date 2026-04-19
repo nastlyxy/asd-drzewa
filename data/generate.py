@@ -1,5 +1,8 @@
-#Remember to pip3 install numpy
 import numpy as np
+import os
+
+# To rozwiązuje Twój błąd - automatycznie tworzy folder 'benchmark'
+os.makedirs('benchmark', exist_ok=True)
 
 def generate_random_array(size):
     return np.random.randint(0, 10000, size, dtype=int)
@@ -19,23 +22,21 @@ def generate_a_shaped_array(size):
     decreasing_part = np.arange(half_size, 0, -1)
     return np.concatenate((increasing_part, decreasing_part))
 
-# Set the sizes for the arrays
-sizes = [2**x for x in range(2, 20)]
+# Rozsądne rozmiary do testów na zdegenerowanym drzewie
+sizes = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
 for size in sizes:
-    # Generate arrays
     random_array = generate_random_array(size)
     increasing_array = generate_increasing_array(size)
     decreasing_array = generate_decreasing_array(size)
     constant_array = generate_constant_array(size)
     a_shaped_array = generate_a_shaped_array(size)
 
-    # Add instance size as the first number and save arrays to files
-    np.savetxt(f'benchmark/random_array_{size:08d}.txt', np.insert(random_array, 0, size), fmt='%d')
-    np.savetxt(f'benchmark/increasing_array_{size:08d}.txt', np.insert(increasing_array, 0, size), fmt='%d')
-    np.savetxt(f'benchmark/decreasing_array_{size:08d}.txt', np.insert(decreasing_array, 0, size), fmt='%d')
-    np.savetxt(f'benchmark/constant_array_{size:08d}.txt', np.insert(constant_array, 0, size), fmt='%d')
-    np.savetxt(f'benchmark/a_shaped_array_{size:08d}.txt', np.insert(a_shaped_array, 0, size), fmt='%d')
+    # Zapis do plików (zmieniony format z 08d na 05d, by pasował do mniejszych liczb)
+    np.savetxt(f'benchmark/random_array_{size:05d}.txt', np.insert(random_array, 0, size), fmt='%d')
+    np.savetxt(f'benchmark/increasing_array_{size:05d}.txt', np.insert(increasing_array, 0, size), fmt='%d')
+    np.savetxt(f'benchmark/decreasing_array_{size:05d}.txt', np.insert(decreasing_array, 0, size), fmt='%d')
+    np.savetxt(f'benchmark/constant_array_{size:05d}.txt', np.insert(constant_array, 0, size), fmt='%d')
+    np.savetxt(f'benchmark/a_shaped_array_{size:05d}.txt', np.insert(a_shaped_array, 0, size), fmt='%d')
 
-
-print("Arrays have been generated and saved to files.")
+print("Gotowe! Pliki wygenerowano i zapisano w folderze benchmark/.")
