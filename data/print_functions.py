@@ -1,5 +1,7 @@
 #tutaj będa funkcje dla komendy print
 from tree import BST, AVL
+import sys
+sys.setrecursionlimit(150000)
 class Node:
     def __init__(self, key):
         self.key = key
